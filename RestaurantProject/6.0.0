@@ -1,0 +1,11 @@
+Collecting twilio
+  Using cached twilio-7.11.0-py2.py3-none-any.whl (1.4 MB)
+Requirement already satisfied: PyJWT<3.0.0,>=2.0.0 in c:\users\alaa-mtc\appdata\local\programs\python\python38\lib\site-packages (from twilio) (2.4.0)
+Requirement already satisfied: pytz in c:\users\alaa-mtc\appdata\local\programs\python\python38\lib\site-packages (from twilio) (2021.1)
+Requirement already satisfied: requests>=2.0.0 in c:\users\alaa-mtc\appdata\local\programs\python\python38\lib\site-packages (from twilio) (2.26.0)
+Requirement already satisfied: charset-normalizer~=2.0.0; python_version >= "3" in c:\users\alaa-mtc\appdata\local\programs\python\python38\lib\site-packages (from requests>=2.0.0->twilio) (2.0.3)
+Requirement already satisfied: certifi>=2017.4.17 in c:\users\alaa-mtc\appdata\local\programs\python\python38\lib\site-packages (from requests>=2.0.0->twilio) (2021.5.30)
+Requirement already satisfied: urllib3<1.27,>=1.21.1 in c:\users\alaa-mtc\appdata\local\programs\python\python38\lib\site-packages (from requests>=2.0.0->twilio) (1.26.6)
+Requirement already satisfied: idna<4,>=2.5; python_version >= "3" in c:\users\alaa-mtc\appdata\local\programs\python\python38\lib\site-packages (from requests>=2.0.0->twilio) (3.2)
+Installing collected packages: twilio
+Successfully installed twilio-7.11.0

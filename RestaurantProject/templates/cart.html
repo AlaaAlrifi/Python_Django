@@ -1,0 +1,93 @@
+{% extends  'sys.html' %}
+{% load static %}
+{% block title %}<title >CART</title>{%endblock%}
+{% block content %}
+	<div class="container" >
+		{% csrf_token %}
+<br>
+<br>
+<br>
+<br>
+<br>
+			<div class="container" >
+
+				<table  class="table table-striped">
+					<tr>
+						<th><h5>Items: <strong>{{total_items}}</strong></h5></th>
+						<th><h5>Total: <strong>{{total}}$</strong></h5></th>
+					</tr>
+				</table>
+
+			</div>
+
+			<br>
+			<div class="container">
+                <table  class="table table-striped">
+    <thead >
+    <tr>
+        <th>Image</th>
+        <th>Item</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Created_on</th>
+    </tr>
+ <tbody>
+
+    {% for x in orders %}
+    <tr>
+            <td><img class="row-image" style="width:128px;height:128px" src="{{x.product.image.url}}"></td>
+            <td>{{x.product.name}}</td>
+            <td>{{x.product.price}}</td>
+            <td>{{x.quantity}}</td>
+            <td>{{x.created_on}}</td>
+        <td><a  style="float:right; margin:5px;" class="btn btn-success" href="{% url 'remove_from_cart' x.id %}">delete</a></td>
+        <td><a  style="float:right; margin:5px;" class="btn btn-success" href="{% url 'edit_item' x.id %}">Edit</a></td>
+       <!-- <td><a  style="float:right; margin:5px;" class="btn btn-success" href="{%url 'buyNow' x.id %}">Buy Now</a></td>
+        -->
+        <td><a  style="float:right; margin:5px;" class="btn btn-success" href="{%url 'enter_your_data' x.id %}">Buy Now</a></td>
+
+    </tr>
+
+    {%endfor%}
+
+    </tbody>
+    </thead>
+</table>
+				</div>
+
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+      <!--اول اشي بفحص هل الصفحة يلي واقفة عليها الها سابق ام لا -->
+      {% if orders.has_previous%}<!--هون اول اشي رح افحص انو التوبيكس كتيرة والها سوابيق -->
+
+    <li class="page-item"><a class="page-link" href="?page={{orders.previous_page_number}}" >Previous</a></li>
+      {%endif%}
+      {% for x in orders.paginator.page_range %}<!--هون هتعمل انو يكون عندي لوب ليعرضلي الصفحات -->
+      <!--هون التوبيكس نمبر هادا دالة نمبر جاهزة من الدجانغو -->
+      {% if orders.number == pages_num %}<!-- هون انو افحصلي الصفحة يلي واقفة عليها نفسها رقم البيج يلي انا طلبتو ووضغطت عليه هون اعمل انو يكون اكتيف واويلي رقمو واذا م كان هو يلي واقف عليه ازن م تخليه اكتيف وبس كدا -->
+      <li class="page-item active"><span class="sr-only">{{x}}</span>
+        </li>
+      {%else%}
+             <li class="page-item ">
+             <a class="page-link" href="?page={{x}}">{{x}}</a>
+             </li>
+
+      {%endif%}
+      {%endfor%}
+
+
+      <!--اول اشي بفحص هل الصفحة يلي واقفة عليها الها تالي ام لا -->
+      {% if orders.has_next%}
+      <li class="page-item"><a class="page-link" href="?page={{orders.next_page_number}}">Next</a></li>
+      <!--في حال م كان عندي تالي انا شو رح يسير  -->
+      {%else%}
+      <li class="page-item disabled">
+          <a class="page-link" href="#">Next</a>
+      </li>
+      {%endif%}
+
+  </ul>
+</nav>
+	</div>
+
+{% endblock content %}

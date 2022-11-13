@@ -1,0 +1,59 @@
+{% extends  'sys.html' %}
+{% load static %}
+{% block title %}<title >My Account</title>{%endblock%}
+
+{% block content %}
+<br>
+<br>
+<br>
+<br>
+
+              <form id="form" method="POST">
+
+                {% csrf_token %}
+
+<div class="container" >
+                <hr>
+                <h6 class="heading-small text-muted mb-4">User information</h6>
+
+
+
+                        <label class="form-control-label" >User Name</label>
+							<input disabled class="form-control" type="text" name="name" placeholder="{{user}}">
+
+                        <label class="form-control-label">Email address</label>
+							<input disabled class="form-control" type="email" name="email" placeholder="{{user.email}}">
+
+                          <hr>
+                <h6 class="heading-small text-muted mb-4">Contact information</h6>
+
+                        <label class="form-control-label">Address</label>
+							<input required class="form-control" type="text" name="address" placeholder="Address..">
+
+                        <label class="form-control-label">City</label>
+							<input required class="form-control" type="text" name="city" placeholder="City..">
+                        <label class="form-control-label">State</label>
+							<input required class="form-control" type="text" name="state" placeholder="State..">
+
+
+                        <label class="form-control-label" >Zip code</label>
+							<input required class="form-control" type="text" name="zipcode" placeholder="Zip code..">
+
+                        <label class="form-control-label">Phone</label>
+							<input required class="form-control" type="text" name="phone" placeholder="Phone..">
+
+     <br>
+                        <button class="btn btn-success btn-block"><a style="color:white ; text-decoration: none ;" href="{%url 'buyNow' id %}">Payment Confirmation</a>   </button>
+
+
+                  </div>
+
+
+
+
+
+                <br>
+
+
+ </form>
+{% endblock content %}
