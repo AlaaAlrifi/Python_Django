@@ -1,8 +1,4 @@
 import json
-# رح اعملي تثبيت لمكتبة الدفع في جانغو pip install django-payments
-# بروح على اليو ار الز وبعمل تعريف path('payments/', include('payments.urls')),
-# رح اروح اعمل مودل لالها
-# بروح على الاعدادات وبعرف تطبيق 'payments'
 from datetime import datetime
 from decimal import Decimal
 import body as body
@@ -10,7 +6,6 @@ from django.core.mail import send_mail
 from django.http import JsonResponse, request
 from django.template.response import TemplateResponse
 from django.core.validators import validate_email
-# فت المكتبتين يلي فوق خاص بدالة الدفع
 from django.conf import settings
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render, get_object_or_404, redirect
@@ -38,8 +33,6 @@ def home(req):
     return render(req, 'home.html', {'categories': categories, 'menu_items': menu_items})
 
 
-# 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 هادا السيكرت الخاص بجوجل تسجيل الدخول
-# 561382438485-heghh3oagugdcum6nbi335quv9uri2rl.apps.googleusercontent.com هادا الاي دي
 def register(req):
     if req.method == 'POST':
         username = req.POST['username']
@@ -58,10 +51,6 @@ def register(req):
                 else:
                     user = User.objects.create_user(username=username, email=email, password=password)
                     user.save()
-
-                    # روحي على السيتنج واعملي الاعدادات كومنت عشان تامني جيميليك ومتى بدك تعرضيه للدكتور بتشيلي الكومنت وبتشيلي التحقق بخطوتين من جيميلك علشان م يعطي ارور
-
-                    #return render(req, 'home.html')
                     return redirect('login')
 
             else:
@@ -75,9 +64,6 @@ def register(req):
     else:
         return render(req, 'signup.html')
 
-    '''send_mail('Registration', 'You have just registered for a special site for fast food (Saj Restaurant) Welcome Dear ^_^..', email, [email],
-                                 fail_silently=False)'''  # هون ارسلت للايميل يلي قام بالتسجيل ارسلتلو مسج على جيميلو من جيمميلك ي الاء في لسيتنج موجود
-
 
 def login(req):
     categories = Category.objects.all()
@@ -88,10 +74,7 @@ def login(req):
         user = User.objects.filter(email=email).first()
         if User.objects.filter(email=email).exists():
             if user.check_password(password):
-                auth.login(req, user)  # هون عملت تسجيل دخول للمستخم في حالة كان موجود بالنظام
-                '''send_mail('Registration',
-                          'Allaaaaaa ^_^..','ala525748@gmail.com', ['mihsaan411@gmail.com'],
-                          fail_silently=False)'''
+                auth.login(req, user) 
                 return render(req, 'home.html', {'categories': categories, 'menu_items': menu_items})
             else:
                 messages.warning(req, 'The password you entered is incorrect, please try again....')
@@ -104,7 +87,6 @@ def login(req):
     return render(req, 'login.html')
 
 
-# اعادة تعيين كلمة المرور
 def passwordReset(req):
     if req.method == 'POST':
         email = req.POST.get('email')
@@ -135,7 +117,6 @@ def passwordReset(req):
 
 def reserve(req):
     total_tables = Booking.objects.count()
-    # طبعا هون جبت ارسلت الكاتيجوريز عشان لو ضغط على المنيو يطلعلو القائمة كلها
     booking_cancel = Booking.objects.filter(buy=False)
     for x in booking_cancel:
         if Booking.objects.filter(buy=False).exists():
@@ -157,23 +138,7 @@ def reserve(req):
             print(booking_table.buy)
             booking = Booking.objects.filter(id=booking_table.id)
             return render(req, 'reservation_confirmation.html', {'booking': booking})
-            '''
-            
-             total_number_of_tables = 0
-             max_number_of_tables = 2
-            if int(number_of_tables) < max_number_of_tables:
-                print(total_number_of_tables < max_number_of_tables, type(number_of_tables), total_number_of_tables)
-                total_number_of_tables = total_number_of_tables + int(number_of_tables)
-                booking_table = Booking.objects.create(user=req.user, phone=phone, number_of_persons=number_of_persons,
-                                                       number_of_tables=number_of_tables, date=date, time=timetables,
-                                                       comment=comment, buy=False)
-                booking_table.save()
-                print(booking_table.buy)
-                booking = Booking.objects.filter(id=booking_table.id)
-                return render(req, 'reservation_confirmation.html', {'booking': booking})
-            else:
-                messages.error(req, 'The number of tables you want to book must be two or one...!')
-                pass'''
+           
         else:
             messages.warning(req, 'Sorry, all tables in the restaurant have been reserved...!')
             pass
@@ -204,18 +169,9 @@ def myBooking(req):
         if Booking.objects.filter(buy=False).exists():
             booking_cancel.delete()
     user_booking=Booking.objects.filter(user=req.user)
-    #return render(req, 'myBooking2.html', {'booking': booking})
     return render(req, 'myBooking2.html', {'user_booking': user_booking})
 
-    '''for x in Booking.objects.get(user=req.user) :
-        if x.buy == True:
-            return render(req, 'myBooking2.html', {'booking': booking})
-        else:
-            return render(req, 'home.html')
-
-    return render(req, 'myBooking2.html', {'booking': booking})'''
-
-
+   
 def logout(req):
     auth.logout(req)
     return render(req, 'index.html')
@@ -264,7 +220,6 @@ def add_cart(req, id):
         return render(req, 'add_to_cart.html', {'menu_items': menu_items})
 
 
-# لاحصل على السعر الكلي
 def get_Total(orders):
     try:
         total = 0
@@ -309,12 +264,10 @@ def showCart(req):
                    'total_items': total_items})
 
 
-# حزف طلب من الطلبات الموجودة في الكارت
 def remove_from_cart(req, id):
     order = get_object_or_404(Order, id=id)
     if Order.objects.filter(id=id).exists():
         order.delete()
-        # OrderItem.objects.filter(product=order.product).delete()
         return redirect('showCart')
     else:
         messages.warning(req, 'The order you want to remove does not already exist ')
@@ -335,7 +288,6 @@ def edit_item(req, id):
 
 
 
-#مش مهمة احزفيها
 def completePay(req):
     orders = Order.objects.filter(user=req.user)
     total_items = orders.count()
